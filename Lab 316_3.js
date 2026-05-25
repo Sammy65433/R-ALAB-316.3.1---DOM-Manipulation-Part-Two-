@@ -164,22 +164,42 @@ console.log(e.target.textContent);
 // catalog, etc. when a link is clicked. Clicking anywhere other than on a
 // link should do nothing.
 
-// Now that we have references to each of these links, and a registered event listener, we will want to add a toggled "active" state to each menu item, showing whether or not it is currently selected:
+// Now that we have references to each of these links, and a registered 
+// event listener, we will want to add a toggled "active" state to each 
+// menu item, showing whether or not it is currently selected:
 
-// The event listener should add the active class to the <a> element that was clicked, unless it was already active, in which case it should remove it.
+// The event listener should add the active class to the <a> element that 
+// was clicked, unless it was already active, in which case it should 
+// remove it.
 
-// The event listener should remove the active class from each other <a> element in topMenuLinks - whether the active class exists or not.
+// The event listener should remove the active class from each other <a> 
+// element in topMenuLinks - whether the active class exists or not.
 
-// Hint: Removing a non-existent class from an element does not cause an error!
+// Hint: Removing a non-existent class from an element does not cause an 
+// error!
 // remove active from every top menu link
-//   topMenuLinks.forEach(function (link) {
-//     if (link !== e.target) {
-//       link.classList.remove('active');
-//     }
-//   });
+  if (e.target.classList.contains('active')) {
+    e.target.classList.remove('active');
+    subMenuEl.style.top = '0';                // hide submenu
+    return;
+  }
 
 //   // if clicked link was already active, remove it
 //   // otherwise add it
 //   e.target.classList.toggle('active');
 // });
-})
+
+// remove active class from every top menu link
+for (let i = 0; i < topMenuLinks.length; i++) {
+    topMenuLinks[i].classList.remove('active');
+}
+let linkObj = null;                     // will hold the matching entry
+
+for (let i = 0; i < menuLinks.length; i++) {
+    const entry = menuLinks[i];
+    if (entry.text === e.target.textContent) {
+        linkObj = entry;                // store the match
+        break;                          // stop looping once found
+    }
+    
+}})
