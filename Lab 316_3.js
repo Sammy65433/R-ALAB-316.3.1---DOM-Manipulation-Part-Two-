@@ -67,12 +67,12 @@ let menuLinks = [
 ];
 
 // Step 1: Main content element
-const mainEl = document.querySelector("main"); //find tag and remember it 
+const mainEl = document.querySelector("main"); //find tag and remember it
 
 mainEl.style.backgroundColor = "var(--main-bg)"; // paint background with Css var
 
 //put a big heading inside <main>
-mainEl.innerHTML = "<h1>R-ALAB 316.3.1 - DOM Manipulation (Part Two)</h1>"; 
+mainEl.innerHTML = "<h1>R-ALAB 316.3.1 - DOM Manipulation (Part Two)</h1>";
 
 //add the CSS class that centers its children (Lab316_3css.css)
 mainEl.classList.add("flex-ctr");
@@ -92,10 +92,11 @@ topMenuEl.style.backgroundColor = "var(--top-menu-bg)";
 topMenuEl.classList.add("flex-around");
 
 // Step 3: Build menu links from data
-menuLinks.forEach(function (link) { // loop over every object in the menuLinks array
+menuLinks.forEach(link => {
+  // loop over every object in the menuLinks array
 
   const a = document.createElement("a");
-  a.setAttribute("href", link.href); // give the link its destination URL
+  a.href = link.href; // give the link its destination URL
   a.textContent = link.text;
   topMenuEl.appendChild(a); // stick the new <a> into the top‑menu bar
 });
@@ -118,8 +119,8 @@ const subMenuEl = document.querySelector("#sub-menu");
 
 // Set the height subMenuEl element to be "100%".
 
-subMenuEl.style.height = '50px';               // give it a visible height for testing
-subMenuEl.style.backgroundColor = '#ffebcd';   // light color so you can see it
+// subMenuEl.style.height = '50px';               // give it a visible height for testing
+// subMenuEl.style.backgroundColor = '#ffebcd';
 //height to fill its container
 subMenuEl.style.height = "100%";
 
@@ -151,12 +152,6 @@ subMenuEl.style.top = "0";
 // Grab the submenu, style it like the top menu, then position it
 // absolutely and place it at the top so it stays hidden until later.
 
-
-
-
-
-
-
 // Part 4: Adding Menu Interaction
 
 // In order to add submenu links, we will need to restructure the
@@ -180,7 +175,7 @@ topMenuEl.addEventListener("click", function (e) {
   //ignore clicks that are not an <a> element
   if (e.target.tagName !== "A") {
     return; //Exit
-  }
+  
 
   // The first line of code of the event listener function
   // should call the event object's preventDefault() method.
@@ -210,10 +205,12 @@ topMenuEl.addEventListener("click", function (e) {
   // Hint: Removing a non-existent class from an element does not cause an
   // error!
   // remove active from every top menu link
-  {
+  
     /* <a> already has the "active" class */
-  }
+  
   if (e.target.classList.contains("active")) {
+
+
     e.target.classList.remove("active");
     // turn class off
     subMenuEl.style.top = "0"; // hide submenu
@@ -221,105 +218,80 @@ topMenuEl.addEventListener("click", function (e) {
     return; //exit the handler - nothing else runs
   }
 
+  // deactivate every top link, then activate clicked one 
+  topMenuLinks.forEach(link => link.classList.remove("active"));
+  // e.target.classList.add("active");
+
+
   //   // if clicked link was already active, remove it
   //   // otherwise add it
-  //   e.target.classList.toggle('active');
-  // });
-
-  // remove active class from every top menu link
-  // every <a> inside #top‑menu loses the active class.
-  //    will be re‑added later). */
- for (const link of topMenuLinks) {
-        link.classList.remove('active');
-    }
-    e.target.classList.add('active');
+  e.target.classList.add("active");
 
 
-  let linkObj = null; // will hold the matching entry
-
-  for (let i = 0; i < menuLinks.length; i++) {
-    const entry = menuLinks[i]; // obj from the menuLinks
-    if (entry.text === e.target.textContent) {
-      linkObj = entry; // store the match
-      break; // stop looping once found
-    }
-  }
-  if (linkObj && linkObj.subLinks) {
-        // submenu should appear
-        subMenuEl.style.top = '100%';       // slide down (visible)
-        buildSubmenu(linkObj.subLinks);    // populate it (see helper below)
-    } else {
-        // no sub‑links (e.g., ABOUT) → keep submenu hidden
-        subMenuEl.style.top = '0';
-        subMenuEl.innerHTML = '';           // clear any leftover items
-    }
-
-});
-/**
- * Populate the submenu with a set of link objects.
- * @param {Array} subLinks – array of objects {text, href}
- */
-function buildSubmenu(subLinks) {
-    // 1️⃣ clear existing submenu content
-    subMenuEl.innerHTML = '';
-
-    // 2️⃣ create a new <a> for each sub‑link and append it
-    for (let i = 0; i < subLinks.length; i++) {
-        const link = subLinks[i];
-        const a = document.createElement('a');
-        a.href = link.href;
-        a.textContent = link.text;
-        subMenuEl.appendChild(a);
-    }
+// remove active class from every top menu link
+// every <a> inside #top‑menu loses the active class.
+//    will be re‑added later). */
+for (const link of topMenuLinks) {
+  link.classList.remove("active");
+  
 }
+  // e.target.classList.add("active");
 
 
+let linkObj = null; // will hold the matching entry
 
-
+for (let i = 0; i < menuLinks.length; i++) {
+  const entry = menuLinks[i]; // obj from the menuLinks
+  if (entry.text === e.target.textContent) {
+    linkObj = entry; // store the match
+    break; // stop looping once found
+  }
+}}
+//   //i could not get the siidebar to appear
 
 // Part 5
 
-// Within the same event listener, we want to toggle the submenu between 
-// active and non-active states. First, we will set the submenu to show or 
+// Within the same event listener, we want to toggle the submenu between
+// active and non-active states. First, we will set the submenu to show or
 // hide itself depending on the menu state:
 
-// Within the event listener, if the clicked <a> element does not yet have 
+// Within the event listener, if the clicked <a> element does not yet have
 // a class of "active" (it was inactive when clicked):
 
-// If the clicked <a> element's "link" object within menuLinks has a 
-// subLinks property (all do, except for the "link" object for ABOUT), 
+// If the clicked <a> element's "link" object within menuLinks has a
+// subLinks property (all do, except for the "link" object for ABOUT),
 // set the CSS top property of subMenuEl to 100%.
 
 // Otherwise, set the CSS top property of subMenuEl to 0.
 
-// Hint: Caching the "link" object will come in handy for passing its 
+// Hint: Caching the "link" object will come in handy for passing its
 // subLinks array later.
 
-// Progress Check - Ensure that clicking CATALOG, ORDERS, etc. shows 
-// the submenu bar, and that clicking them again hides it. Clicking 
+// Progress Check - Ensure that clicking CATALOG, ORDERS, etc. shows
+// the submenu bar, and that clicking them again hides it. Clicking
 // ABOUT should not show the submenu bar.
 
-// The submenu needs to be dynamic based on the clicked link. To facilitate 
-// that, we will create a helper function called buildSubmenu that does 
+// The submenu needs to be dynamic based on the clicked link. To facilitate
+// that, we will create a helper function called buildSubmenu that does
 // the following:
 
 // Clear the current contents of subMenuEl.
 
-// Iterate over the subLinks array, passed as an argument, and for each 
+// Iterate over the subLinks array, passed as an argument, and for each
 // "link" object:
 
 // Create an <a> element.
 
-// Add an href attribute to the <a>, with the value set by the href 
+// Add an href attribute to the <a>, with the value set by the href
 // property of the "link" object.
 
-// Set the element's content to the value of the text property of the 
+// Set the element's content to the value of the text property of the
 // "link" object.
 
 // Append the new element to the subMenuEl.
 
-// Once you have created your helper function, include it in the event 
-// listener within the same logic that shows the submenu, remembering to 
+// Once you have created your helper function, include it in the event
+// listener within the same logic that shows the submenu, remembering to
 // pass the array of sub-links as an argument.
 
 // Progress Check - Here is what the page should look like so far
@@ -329,7 +301,7 @@ function buildSubmenu(subLinks) {
 // })
 
 // //ignore clicks that are not <a>
-// if (e.target.tagName !== 'A') 
+// if (e.target.tagName !== 'A')
 //     return;
 // console.log(e.target.textContent);  //
-
+})

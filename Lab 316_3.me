@@ -18,6 +18,26 @@ them, handling click events, and using event delegation.
 - `preventDefault()` for links
 
 
+/ (root)
+├─ index.html          ← markup, contains <nav id="top-menu">, <nav id="sub-menu">, <main>
+├─ index.js            ← all DOM‑manipulation logic (the code you posted)
+├─ LAB 316_4_1FV.css   ← visual styling, CSS custom properties, flex utilities
+└─ README.md           ← this file
+
+How It Works (quick walkthrough)
+Data – menuLinks array defines top‑level items and optional subLinks.
+Page Setup – main and navigation elements are styled with CSS variables and flex classes.
+Top‑Menu Build – Loop through menuLinks, create <a> elements, set href and text, append to #top‑menu.
+Sub‑Menu Setup – #sub‑menu is sized, given a background, positioned absolute and hidden (top: 0).
+Click Delegation – One listener on #top‑menu:
+e.preventDefault() stops navigation.
+If the clicked <a> already has .active, it is removed and the submenu is hidden.
+Otherwise, all links lose .active, the clicked link gains it, and the matching object from menuLinks is located.
+If that object contains subLinks, the submenu is cleared, new <a> elements are created for each sub‑link, and the submenu is revealed (subMenuEl.style.top = "100%").
+If there are no subLinks, the submenu stays hidden.
 
 **Author:**  
 Samuel
+
+# Clone repository
+git clone https://github.com/
