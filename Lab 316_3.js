@@ -177,6 +177,17 @@ topMenuEl.addEventListener("click", function (e) {
     return; //Exit
   
 
+
+    let linkObj = null; // will hold the matching entry
+
+for (let i = 0; i < menuLinks.length; i++) {
+  const entry = menuLinks[i]; // obj from the menuLinks
+  if (entry.text === e.target.textContent) {
+    linkObj = entry; // store the match
+    break; // stop looping once found
+  }
+}
+
   // The first line of code of the event listener function
   // should call the event object's preventDefault() method.
 
@@ -236,17 +247,12 @@ for (const link of topMenuLinks) {
   
 }
   // e.target.classList.add("active");
+// When a user clicks a top‑menu link, need to know which object in the menuLinks 
+// array the click belongs to.
+// Each object in menuLinks has a text property ("about", "catalog" …) 
+// that matches the link’s visible label.
 
-
-let linkObj = null; // will hold the matching entry
-
-for (let i = 0; i < menuLinks.length; i++) {
-  const entry = menuLinks[i]; // obj from the menuLinks
-  if (entry.text === e.target.textContent) {
-    linkObj = entry; // store the match
-    break; // stop looping once found
-  }
-}}
+}
 //   //i could not get the siidebar to appear
 
 // Part 5
